@@ -111,3 +111,59 @@ Résultat sur 8 bits : `00000000`, soit `0`.
 ```
 
 **Réponse : `10010110₂`**
+
+### Exercice 13 — Encoder `+10.25` en IEEE 754 (32 bits)
+
+```
+10 = 1010₂        0.25 = 1/4 = 0.01₂
+→ 10.25₁₀ = 1010.01₂
+
+Normalisation : 1010.01₂ = 1.01001₂ × 2³
+→ e = 3, mantisse = 01001
+
+Signe : positif → S = 0
+
+Exposant biaisé (offset +127) : E = e + 127 = 3 + 127 = 130 = 10000010₂
+
+Mantisse sur 23 bits : 01001000000000000000000
+```
+
+**Réponse : `0 10000010 01001000000000000000000₂`**
+
+### Exercice 14 — Encoder `−3.75` en IEEE 754 (32 bits)
+
+```
+3 = 11₂        0.75 = 1/2 + 1/4 = 0.11₂
+→ 3.75₁₀ = 11.11₂
+
+Normalisation : 11.11₂ = 1.111₂ × 2¹
+→ e = 1, mantisse = 111
+
+Signe : négatif → S = 1
+
+Exposant biaisé (offset +127) : E = e + 127 = 1 + 127 = 128 = 10000000₂
+
+Mantisse sur 23 bits : 11100000000000000000000
+```
+
+**Réponse : `1 10000000 11100000000000000000000₂`**
+
+### Exercice 15 — Décoder `0 10000010 01100000000000000000000₂`
+
+```
+S = 0 → positif
+E = 10000010₂ = 130 → e = E − 127 = 130 − 127 = 3
+mantisse = 1.011₂ (1 implicite + 011 stockés)
+valeur = 1.011₂ × 2³ = 1011.0₂ = 11₁₀
+```
+
+**Réponse : `+11`**
+
+### Exercice 16 — Exposant biaisé pour `e = 0`
+
+```
+E = e + 127 = 0 + 127 = 127 = 01111111₂
+```
+
+**Réponse : `E = 127 = 01111111₂`** — c'est cette valeur (127) qui sert de référence
+(« zéro » de l'exposant) grâce à l'offset de −127 utilisé pour décoder : `e = E − 127`.

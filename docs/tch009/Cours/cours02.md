@@ -92,15 +92,99 @@ trouver sa valeur absolue.
 
 Norme **IEEE 754** : un réel est décomposé en **signe**, **exposant** et **mantisse**.
 
-- `float` : 32 bits (1 signe, 8 exposant, 23 mantisse)
-- `double` : 64 bits (1 signe, 11 exposant, 52 mantisse)
+- `float` (simple précision) : 32 bits → 1 bit de **signe**, 8 bits d'**exposant**, 23 bits de **mantisse**
+- `double` (double précision) : 64 bits → 1 bit de signe, 11 bits d'exposant, 52 bits de mantisse
 
 ```
-+6.5 = +110.1₂ = +1.101₂ × 2²
-signe = 0 (positif), mantisse = 101, exposant = 2
+ 1 bit    8 bits         23 bits
+[ S ][ E E E E E E E E ][ M M M M M M M M M M M M M M M M M M M M M M M ]
+signe   exposant (biaisé)         mantisse (partie fractionnaire)
 ```
 
-La mantisse est normalisée sous la forme `1.xxxx` (le 1 initial est implicite).
+### 4.1 La mantisse normalisée
+
+Tout réel non nul peut s'écrire sous forme normalisée `1.xxxx × 2ᵉ` (le `1.` initial
+est toujours présent pour un nombre normalisé, donc on ne le stocke pas : il est
+**implicite**). Seule la partie `xxxx` après la virgule est enregistrée dans les
+23 bits de mantisse.
+
+### 4.2 L'exposant biaisé (offset de −127)
+
+Sur 32 bits, l'exposant réel `e` (qui peut être négatif) n'est pas stocké tel quel :
+on stocke plutôt un **exposant biaisé** `E = e + 127`. Ce biais de 127 permet de
+représenter des exposants négatifs et positifs avec une simple suite de bits non
+signée sur 8 bits (plage `E` : 0 à 255, donc `e` utile : −126 à 127).
+
+```
+E (biaisé, stocké) = e (réel) + 127
+e (réel) = E (biaisé, stocké) − 127
+```
+
+### 4.3 Exemple complet : encoder `+6.5` en IEEE 754 (32 bits)
+
+**Étape 1 — Binaire pur**
+
+```
+6 = 110₂        0.5 = 1/2 = 0.1₂
+→ 6.5₁₀ = 110.1₂
+```
+
+**Étape 2 — Normalisation** (forme `1.xxxx × 2ᵉ`, on déplace la virgule après le
+premier `1`) :
+
+```
+110.1₂ = 1.101₂ × 2²
+```
+
+On lit directement : exposant réel `e = 2`, mantisse (sans le `1.` implicite) = `101`.
+
+**Étape 3 — Signe**
+
+```
+6.5 est positif → signe S = 0
+```
+
+**Étape 4 — Exposant biaisé** (offset **+127**, donc `E = e + 127`) :
+
+```
+E = e + 127 = 2 + 127 = 129
+129₁₀ = 10000001₂  (sur 8 bits)
+```
+
+**Étape 5 — Mantisse sur 23 bits**
+
+On complète `101` par des zéros à droite jusqu'à 23 bits :
+
+```
+101 → 10100000000000000000000  (23 bits)
+```
+
+**Étape 6 — Assemblage des 32 bits**
+
+```
+ S    E (8 bits)   M (23 bits)
+ 0  10000001  10100000000000000000000
+
+→ +6.5 = 0 10000001 10100000000000000000000₂
+```
+
+### 4.4 Décoder un IEEE 754 32 bits
+
+Pour retrouver la valeur décimale à partir des 32 bits, on fait le chemin inverse :
+
+1. **Signe** `S` : 0 = positif, 1 = négatif.
+2. **Exposant réel** : `e = E (biaisé) − 127`.
+3. **Mantisse** : on remet le `1.` implicite devant les bits stockés → `1.xxxx`.
+4. **Valeur** : `(−1)^S × 1.xxxx₂ × 2ᵉ`, qu'on reconvertit ensuite en décimal.
+
+**Exemple** : `0 10000001 10100000000000000000000₂`
+
+```
+S = 0 → positif
+E = 10000001₂ = 129 → e = 129 − 127 = 2
+mantisse = 1.101₂ (1 implicite + 101 stockés)
+valeur = 1.101₂ × 2² = 110.1₂ = 6.5₁₀
+```
 
 ## 5. Caractères
 
