@@ -20,7 +20,11 @@ Répondre à chaque question en montrant les étapes. Vérifier les plages et le
 | 10 | Décoder la suite de codes ASCII : `72 105 33`. |
 | 11 | Sur 8 bits non signés, que vaut `255 + 1` ? Expliquer. |
 | 12 | Calculer le complément à deux de `01101010₂`. |
-| 13 | Encoder `+10.25` en IEEE 754 sur 32 bits (donner le signe, l'exposant biaisé et la mantisse). |
-| 14 | Encoder `−3.75` en IEEE 754 sur 32 bits. |
-| 15 | Décoder le nombre IEEE 754 32 bits suivant : `0 10000010 01100000000000000000000₂`. |
-| 16 | Sur 32 bits, quel exposant biaisé `E` correspond à un exposant réel `e = 0` ? Justifier avec l'offset de −127. |
+| 13 | Représenter `−5` par décalement (biais de 128) sur 8 bits. |
+| 14 | Représenter `+9` par décalement (biais de 128) sur 8 bits. |
+| 15 | Décoder `01111001₂` (8 bits, par décalement, biais de 128). |
+| 16 | Décoder `10000011₂` (8 bits, par décalement, biais de 128). |
+| 17 | Encoder `+10.25` en IEEE 754 sur 32 bits (donner le signe, l'exposant biaisé et la mantisse). |
+| 18 | Encoder `−3.75` en IEEE 754 sur 32 bits. |
+| 19 | Décoder le nombre IEEE 754 32 bits suivant : `0 10000010 01100000000000000000000₂`. |
+| 20 | Sur 32 bits, quel exposant biaisé `E` correspond à un exposant réel `e = 0` ? Justifier avec l'offset de −127. |

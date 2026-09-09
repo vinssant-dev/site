@@ -32,7 +32,8 @@ Représentation « binaire pur » : chaque bit est pondéré par une puissance d
 
 ## 3. Entiers signés (positifs et négatifs)
 
-Trois méthodes historiques, dont seule la dernière est utilisée aujourd'hui.
+Quatre méthodes, dont seul le complément à deux est utilisé aujourd'hui pour les entiers
+(le décalage, lui, est repris plus loin pour l'exposant des nombres réels).
 
 ### 3.1 Signe et magnitude
 
@@ -87,6 +88,56 @@ trouver sa valeur absolue.
 10000001 → inversion : 01111110 → +1 : 01111111 = 127
 → le nombre est −127
 ```
+
+### 3.5 Représentation par décalement (biais ou offset)
+
+**Principe** : on additionne un **biais** fixe (souvent `2ⁿ⁻¹`, soit la moitié de la plage
+possible) à la valeur réelle avant de la stocker en binaire pur. Le nombre stocké est donc
+toujours **positif ou nul**, ce qui simplifie certaines comparaisons (on compare directement
+les représentations comme des nombres non signés). Cette méthode s'appelle aussi
+« représentation biaisée » ou « excess-K » (K étant le biais), et c'est exactement celle
+utilisée par l'exposant du format IEEE 754 (voir section 4, biais de 127).
+
+**Formule** (sur n bits, biais `K = 2ⁿ⁻¹`) :
+
+```
+valeur stockée (binaire pur) = valeur réelle + K
+valeur réelle = valeur stockée (binaire pur) − K
+```
+
+**Exemple** : sur 8 bits, biais `K = 2⁷ = 128`. Représenter `−5` :
+
+```
+valeur stockée = −5 + 128 = 123
+123₁₀ = 01111011₂
+→ −5 (par décalement, biais 128) = 01111011₂
+```
+
+**Exemple** : représenter `+5` (même biais) :
+
+```
+valeur stockée = 5 + 128 = 133
+133₁₀ = 10000101₂
+→ +5 (par décalement, biais 128) = 10000101₂
+```
+
+**Décoder** `01111011₂` (8 bits, biais 128) :
+
+```
+01111011₂ = 123₁₀
+valeur réelle = 123 − 128 = −5
+```
+
+**Plage par décalement sur n bits** (biais `K = 2ⁿ⁻¹`) : de `−2ⁿ⁻¹` à `2ⁿ⁻¹ − 1`, la même
+plage que le complément à deux, mais l'ordre des bits croît directement avec la valeur (le
+zéro biaisé — le plus petit nombre représentable — correspond au patron tout à zéro
+`00000000`, et non à `10000000` comme en complément à deux).
+
+| Nombre de bits | Biais `K = 2ⁿ⁻¹` | Plage (signé) |
+|----------------|-------------------|----------------|
+| 8 bits | 128 | −128 à 127 |
+| 16 bits | 32 768 | −32 768 à 32 767 |
+| 32 bits | 2 147 483 648 | −2 147 483 648 à 2 147 483 647 |
 
 ## 4. Réels (virgule flottante)
 

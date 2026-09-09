@@ -112,7 +112,43 @@ Résultat sur 8 bits : `00000000`, soit `0`.
 
 **Réponse : `10010110₂`**
 
-### Exercice 13 — Encoder `+10.25` en IEEE 754 (32 bits)
+### Exercice 13 — Représenter `−5` par décalement (biais 128, 8 bits)
+
+```
+valeur stockée = valeur réelle + K = −5 + 128 = 123
+123₁₀ = 01111011₂
+```
+
+**Réponse : `01111011₂`**
+
+### Exercice 14 — Représenter `+9` par décalement (biais 128, 8 bits)
+
+```
+valeur stockée = valeur réelle + K = 9 + 128 = 137
+137₁₀ = 10001001₂
+```
+
+**Réponse : `10001001₂`**
+
+### Exercice 15 — Décoder `01111001₂` (biais 128, 8 bits)
+
+```
+01111001₂ = 121₁₀
+valeur réelle = valeur stockée − K = 121 − 128 = −7
+```
+
+**Réponse : `−7`**
+
+### Exercice 16 — Décoder `10000011₂` (biais 128, 8 bits)
+
+```
+10000011₂ = 131₁₀
+valeur réelle = valeur stockée − K = 131 − 128 = 3
+```
+
+**Réponse : `+3`**
+
+### Exercice 17 — Encoder `+10.25` en IEEE 754 (32 bits)
 
 ```
 10 = 1010₂        0.25 = 1/4 = 0.01₂
@@ -130,7 +166,7 @@ Mantisse sur 23 bits : 01001000000000000000000
 
 **Réponse : `0 10000010 01001000000000000000000₂`**
 
-### Exercice 14 — Encoder `−3.75` en IEEE 754 (32 bits)
+### Exercice 18 — Encoder `−3.75` en IEEE 754 (32 bits)
 
 ```
 3 = 11₂        0.75 = 1/2 + 1/4 = 0.11₂
@@ -148,7 +184,7 @@ Mantisse sur 23 bits : 11100000000000000000000
 
 **Réponse : `1 10000000 11100000000000000000000₂`**
 
-### Exercice 15 — Décoder `0 10000010 01100000000000000000000₂`
+### Exercice 19 — Décoder `0 10000010 01100000000000000000000₂`
 
 ```
 S = 0 → positif
@@ -159,7 +195,7 @@ valeur = 1.011₂ × 2³ = 1011.0₂ = 11₁₀
 
 **Réponse : `+11`**
 
-### Exercice 16 — Exposant biaisé pour `e = 0`
+### Exercice 20 — Exposant biaisé pour `e = 0`
 
 ```
 E = e + 127 = 0 + 127 = 127 = 01111111₂
