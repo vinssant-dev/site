@@ -68,7 +68,7 @@ Il existe d'autres types de bases de données que nous étudierons dans la deuxi
 * Graphe
 * Colonne-famille
 
-Nous regarderons rendez à ceux-ci les lacunes des bases de données SQL et les avantages de chaque type.
+Nous regarderons rendu à ceux-ci les lacunes des bases de données SQL et les avantages de chaque type.
 
 ## Présentation des données et leurs types
 
