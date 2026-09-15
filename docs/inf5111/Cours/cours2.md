@@ -234,9 +234,9 @@ print('Chiffre' , x,
   'et chaine', chaine)
 ```
 
-## Caractère d'échapement
+## Caractère d'échappement
 
-* Les caractères d'échapements permetent d'inséré des éléments non-textuelles dans un affichage de la fonction print.
+* Les caractères d'échappement permettent d'insérer des éléments non-textuelles dans un affichage de la fonction print.
 
 | Caractère | Description |
 | -- | -- |
